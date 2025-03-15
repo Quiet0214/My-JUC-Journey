@@ -5,6 +5,9 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 /*
  * 设计模式：保护性暂停
+ * 一个线程在等待某个条件满足时会进入暂停状态
+ * 直到条件满足后才会继续执行
+ *
  * */
 public class GuardedSuspension {
 

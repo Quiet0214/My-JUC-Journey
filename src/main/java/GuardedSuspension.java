@@ -4,8 +4,8 @@ import lombok.extern.slf4j.Slf4j;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 /*
-* 设计模式：保护性暂停
-* */
+ * 设计模式：保护性暂停
+ * */
 public class GuardedSuspension {
 
     public static void main(String[] args) {
@@ -18,8 +18,8 @@ public class GuardedSuspension {
     }
 }
 /*
-* 邮箱类，提供get获取邮件方法和put放入邮件方法
-* */
+ * 邮箱类，提供get获取邮件方法和put放入邮件方法
+ * */
 @Slf4j
 class MailBox{
     private String message;

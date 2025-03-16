@@ -1,5 +1,8 @@
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.locks.ReentrantLock;
+
 
 @Slf4j
 public class DiningPhilosophersProblem {
@@ -31,13 +34,28 @@ class Philosopher extends Thread{
     @Override
     public void run(){
         while(true){
-            log.debug("{}正在思考",this.getName());
-            synchronized (left){
-                synchronized (right){
-                    log.debug("{}正在吃饭",this.getName());
+
+            log.debug("{}正在思考......",Thread.currentThread().getName());
+            boolean leftLock = false;
+            boolean rightLock = false;
+            try {
+                leftLock = left.lock.tryLock(1,TimeUnit.SECONDS);
+                if(leftLock){
+                    rightLock = right.lock.tryLock(1,TimeUnit.SECONDS);
+                    if(rightLock){
+                        log.debug("{}正在吃饭......",Thread.currentThread().getName());
+                    }
+                }
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }finally{
+                if(leftLock){
+                    left.lock.unlock();
+                }
+                if(rightLock){
+                    right.lock.unlock();
                 }
             }
-
         }
     }
 
@@ -45,7 +63,8 @@ class Philosopher extends Thread{
 
 @Slf4j
 class Chopstick{
-    private String name;
+    private final String name;
+    public final ReentrantLock lock = new ReentrantLock();
     public Chopstick(String name){
         this.name = name;
     }

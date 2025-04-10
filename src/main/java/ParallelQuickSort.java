@@ -15,7 +15,7 @@ public class ParallelQuickSort {
     public static void main(String[] args) {
         ForkJoinPool pool = new ForkJoinPool();
         Random random = new Random();
-        int size = 10000000;
+        int size = 100000000;
 
         // 创建两个空的数组
         int[] array1 = new int[size];
